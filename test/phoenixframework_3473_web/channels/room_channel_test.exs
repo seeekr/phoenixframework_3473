@@ -3,7 +3,15 @@ defmodule Phoenixframework3473Web.RoomChannelTest do
 
   @arg 123
   #  @arg :hello
-  #    @arg "hello"
+  #  @arg "hello"
+
+  setup do
+    {:ok, _, socket} =
+      socket(Phoenixframework3473Web.UserSocket, "user_id", %{some: :assign})
+      |> subscribe_and_join(Phoenixframework3473Web.RoomChannel, "room:lobby")
+
+    {:ok, socket: socket}
+  end
 
   test "ping replies with status ok", %{socket: socket} do
     ref = push(socket, "ping", %{"#{@arg}" => "there"})
